@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+/* Align Tailwind's `dark:` utilities with the .dark class MUI puts on <html>
+   via InitColorSchemeScript + cssVariables, instead of `prefers-color-scheme`. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Single source of truth: MUI's color-scheme classes (.light / .dark) flip
+   the --mui-palette-* variables, and our tokens just alias them. Tailwind's
+   `bg-background`, `text-foreground`, etc. resolve through the same vars and
+   therefore track the active theme automatically — no JS swap, no flash. */
+:root {
+  --background: var(--mui-palette-background-default);
+  --foreground: var(--mui-palette-text-primary);
+  --surface: var(--mui-palette-background-paper);
+  --border: var(--mui-palette-divider);
+  --muted: var(--mui-palette-text-secondary);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
