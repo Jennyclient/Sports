@@ -8,8 +8,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import LiveEventsTable from "./LiveEventsTable";
-import { LIVE_EVENTS_SEED } from "./seed";
 import { LIVE_MARKETS_SEED } from "./marketsSeed";
+import { useLiveEvents, toggleLiveEventStatus } from "@/components/events/eventsStore";
 import EventFilters from "@/components/events/common/EventFilters";
 import type { EventSearchField, SortDirection } from "@/components/events/common/constants";
 import type { Sport } from "@/types/dashboard";
@@ -17,7 +17,7 @@ import type { SportEvent } from "@/types/event";
 
 export default function LiveEventsPage() {
   const router = useRouter();
-  const [events, setEvents] = useState<SportEvent[]>(LIVE_EVENTS_SEED);
+  const events = useLiveEvents();
 
   const [sport, setSport] = useState<Sport | "All">("All");
   const [searchField, setSearchField] = useState<EventSearchField>("name");
@@ -46,13 +46,7 @@ export default function LiveEventsPage() {
   };
 
   const handleToggleDisable = (row: SportEvent) => {
-    setEvents((prev) =>
-      prev.map((e) =>
-        e.id === row.id
-          ? { ...e, status: e.status === "Suspended" ? "Live" : "Suspended" }
-          : e,
-      ),
-    );
+    toggleLiveEventStatus(row.id);
   };
 
   return (

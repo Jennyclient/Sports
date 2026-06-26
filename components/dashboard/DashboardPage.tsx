@@ -18,7 +18,6 @@ import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
 
 import { DASHBOARD_SEED } from "./dashboardSeed";
 import KpiStatCard from "./KpiStatCard";
-import SystemHealthBar from "./SystemHealthBar";
 import LiveEventsWidget from "./LiveEventsWidget";
 import MarketOverview from "./MarketOverview";
 import SportsDistributionChart from "./SportsDistributionChart";
@@ -37,12 +36,6 @@ export default function DashboardPage() {
       <Typography variant="body2" color="text.secondary">
         Overview of platform activity, events, markets, users, and whitelabel API usage.
       </Typography>
-
-      <SystemHealthBar
-        health={data.systemHealth}
-        activeWhitelabels={kpis.activeWhitelabels}
-        totalWhitelabels={kpis.totalWhitelabels}
-      />
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 6, lg: 3 }}>

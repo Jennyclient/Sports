@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
-import { LIVE_EVENTS_SEED } from "./seed";
+import { useLiveEvents } from "@/components/events/eventsStore";
 import { LIVE_MARKETS_SEED } from "./marketsSeed";
 import { MARKET_TABS, marketCategory } from "./marketCategory";
 import AddMarketDialog, { type AddMarketFormValues } from "./AddMarketDialog";
@@ -31,7 +31,8 @@ const createMarketId = () =>
   `mk-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
 
 export default function EventMarketsPage({ eventId }: Props) {
-  const event = LIVE_EVENTS_SEED.find((e) => e.id === eventId) ?? null;
+  const liveEvents = useLiveEvents();
+  const event = liveEvents.find((e) => e.id === eventId) ?? null;
 
   const [markets, setMarkets] = useState<EventMarket[]>(
     () => LIVE_MARKETS_SEED[eventId] ?? [],

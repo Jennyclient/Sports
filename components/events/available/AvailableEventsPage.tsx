@@ -9,7 +9,13 @@ import Typography from "@mui/material/Typography";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 import AvailableEventsTable from "./AvailableEventsTable";
-import { AVAILABLE_EVENTS_SEED } from "./seed";
+import {
+  useAvailableEvents,
+  addAvailableEvent,
+  updateAvailableEvent,
+  deleteAvailableEvent,
+  pushEventToLive,
+} from "@/components/events/eventsStore";
 import EventFilters from "@/components/events/common/EventFilters";
 import EventFormDialog from "@/components/events/common/EventFormDialog";
 import EventDeleteDialog from "@/components/events/common/EventDeleteDialog";
@@ -28,7 +34,7 @@ const toFormValues = (row: SportEvent): SportEventFormValues => ({
 });
 
 export default function AvailableEventsPage() {
-  const [rows, setRows] = useState<SportEvent[]>(AVAILABLE_EVENTS_SEED);
+  const rows = useAvailableEvents();
 
   const [sport, setSport] = useState<Sport | "All">("All");
   const [searchField, setSearchField] = useState<EventSearchField>("name");
@@ -75,20 +81,16 @@ export default function AvailableEventsPage() {
 
   const handleFormSubmit = (values: SportEventFormValues) => {
     if (formMode === "edit" && editingRow) {
-      setRows((prev) =>
-        prev.map((row) =>
-          row.id === editingRow.id ? { ...row, ...values } : row,
-        ),
-      );
+      updateAvailableEvent(editingRow.id, values);
       setEditingRow(null);
       return;
     }
-    setRows((prev) => [{ ...values, markets: 0 }, ...prev]);
+    addAvailableEvent(values);
   };
 
   const handleDeleteConfirm = () => {
     if (!deleteRow) return;
-    setRows((prev) => prev.filter((row) => row.id !== deleteRow.id));
+    deleteAvailableEvent(deleteRow.id);
     setDeleteRow(null);
   };
 
@@ -112,7 +114,7 @@ export default function AvailableEventsPage() {
           onClick={openAddDialog}
           sx={{ alignSelf: { xs: "stretch", sm: "auto" }, textTransform: "none", fontWeight: 600 }}
         >
-          Add Event
+          Create Event
         </Button>
       </Stack>
 
@@ -130,6 +132,7 @@ export default function AvailableEventsPage() {
         sortDir={sortDir}
         onToggleSort={() => setSortDir((d) => (d === "asc" ? "desc" : "asc"))}
         actions={{
+          onPushToLive: (row) => pushEventToLive(row.id),
           onView: setViewRow,
           onEdit: openEditDialog,
           onDelete: setDeleteRow,

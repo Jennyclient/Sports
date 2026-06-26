@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
@@ -16,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import SensorsOutlinedIcon from "@mui/icons-material/SensorsOutlined";
 
 import {
   hiddenOnSm,
@@ -31,6 +33,7 @@ import type { SortDirection } from "@/components/events/common/constants";
 import type { SportEvent } from "@/types/event";
 
 export type AvailableEventActions = {
+  onPushToLive: (row: SportEvent) => void;
   onView: (row: SportEvent) => void;
   onEdit: (row: SportEvent) => void;
   onDelete: (row: SportEvent) => void;
@@ -117,9 +120,19 @@ export default function AvailableEventsTable({
               <TableCell align="right" sx={tableBodyCellSx}>
                 <Stack
                   direction="row"
-                  spacing={0.25}
-                  sx={{ flexWrap: "nowrap", justifyContent: "flex-end" }}
+                  spacing={0.5}
+                  sx={{ flexWrap: "nowrap", justifyContent: "flex-end", alignItems: "center" }}
                 >
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="success"
+                    startIcon={<SensorsOutlinedIcon />}
+                    onClick={() => actions.onPushToLive(row)}
+                    sx={{ textTransform: "none", fontWeight: 600, whiteSpace: "nowrap" }}
+                  >
+                    Add Event
+                  </Button>
                   <Tooltip title="View" arrow>
                     <IconButton size="small" aria-label="View event" onClick={() => actions.onView(row)}>
                       <VisibilityOutlinedIcon fontSize="small" />
