@@ -59,14 +59,14 @@ const isGroup = (item: NavItem): item is NavGroup =>
 
 const NAV_ITEMS: NavItem[] = [
   {
-    label: "Whitelabels",
-    href: "/whitelabels",
-    icon: <BusinessOutlinedIcon fontSize="small" />,
-  },
-  {
     label: "Dashboard",
     href: "/dashboard",
     icon: <DashboardOutlinedIcon fontSize="small" />,
+  },
+  {
+    label: "Whitelabels",
+    href: "/whitelabels",
+    icon: <BusinessOutlinedIcon fontSize="small" />,
   },
   {
     label: "Available Events",

@@ -26,7 +26,7 @@ export default function DashboardSection({
       variant="outlined"
       sx={{
         p: { xs: 2, md: 2.5 },
-        borderRadius: 3,
+        borderRadius: "16px",
         borderColor: "divider",
         height: "100%",
         ...sx,

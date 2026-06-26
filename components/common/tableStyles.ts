@@ -22,6 +22,6 @@ export const hiddenOnXs = { display: { xs: "none", sm: "table-cell" } } as const
 export const hiddenOnSm = { display: { xs: "none", md: "table-cell" } } as const;
 
 export const tablePaperSx = {
-  borderRadius: 3,
+  borderRadius: "16px",
   borderColor: "divider",
 } as const;

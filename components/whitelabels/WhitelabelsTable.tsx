@@ -99,7 +99,7 @@ function WhitelabelMobileAccordionTable({
     <TableContainer
       component={Paper}
       variant="outlined"
-      sx={{ borderRadius: 3, borderColor: "divider" }}
+      sx={{ borderRadius: "16px", borderColor: "divider" }}
     >
       <Table size="medium">
         <TableHead>
@@ -269,7 +269,7 @@ export default function WhitelabelsTable({ rows, actions }: Props) {
       component={Paper}
       variant="outlined"
       sx={{
-        borderRadius: 3,
+        borderRadius: "16px",
         borderColor: "divider",
         ...responsiveTableContainerSx,
       }}

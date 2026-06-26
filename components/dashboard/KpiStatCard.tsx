@@ -32,7 +32,7 @@ export default function KpiStatCard({
       variant="outlined"
       sx={{
         p: { xs: 2, md: 2.5 },
-        borderRadius: 3,
+        borderRadius: "16px",
         borderColor: alert ? "warning.main" : "divider",
         bgcolor: "background.paper",
         height: "100%",

@@ -131,7 +131,7 @@ export default function EventMarketsPage({ eventId }: Props) {
         </Stack>
       </Paper>
 
-      <Paper variant="outlined" sx={{ borderRadius: 3, borderColor: "divider" }}>
+      <Paper variant="outlined" sx={{ borderRadius: "16px", borderColor: "divider" }}>
         <Stack
           direction="row"
           spacing={1}
