@@ -12,23 +12,21 @@ export type MarketType =
 
 export type Market = {
   id: string;
-  eventId: string;
+  eventId?: string;
   eventName: string;
   sport: Sport;
   marketType: MarketType;
   status: MarketStatus;
-  volume: number;
+  volume?: number;
   lastUpdated: string;
 };
 
 export type MarketFormValues = {
   id: string;
-  eventId: string;
   eventName: string;
   sport: Sport;
   marketType: MarketType;
   status: MarketStatus;
-  volume: number;
 };
 
 export type EventMarketType = "Book Maker" | "Fancy";

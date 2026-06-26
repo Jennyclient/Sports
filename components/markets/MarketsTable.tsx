@@ -19,7 +19,7 @@ import {
   tablePaperSx,
 } from "@/components/common/tableStyles";
 import { responsiveTableContainerSx } from "@/components/common/responsiveSx";
-import { formatCurrency, formatDateTime, sportEmoji } from "@/utils/format";
+import { formatDateTime, sportEmoji } from "@/utils/format";
 import type { Market, MarketStatus } from "@/types/market";
 
 type Props = {
@@ -63,10 +63,6 @@ export default function MarketsTable({ rows }: Props) {
             <TableCell sx={tableHeaderCellSx}>Market Type</TableCell>
             <TableCell sx={tableHeaderCellSx}>Event</TableCell>
             <TableCell sx={{ ...tableHeaderCellSx, ...hiddenOnXs }}>Sport</TableCell>
-            <TableCell sx={{ ...tableHeaderCellSx, ...hiddenOnSm }}>Event ID</TableCell>
-            <TableCell align="right" sx={tableHeaderCellSx}>
-              Volume
-            </TableCell>
             <TableCell sx={{ ...tableHeaderCellSx, ...hiddenOnSm }}>Last Updated</TableCell>
             <TableCell sx={tableHeaderCellSx}>Status</TableCell>
           </TableRow>
@@ -85,14 +81,6 @@ export default function MarketsTable({ rows }: Props) {
                 </Stack>
               </TableCell>
               <TableCell sx={{ ...tableBodyCellSx, ...hiddenOnXs }}>{row.sport}</TableCell>
-              <TableCell
-                sx={{ ...tableBodyCellSx, ...hiddenOnSm, fontFamily: "monospace", fontSize: 13 }}
-              >
-                {row.eventId}
-              </TableCell>
-              <TableCell align="right" sx={tableBodyCellSx}>
-                {row.volume > 0 ? formatCurrency(row.volume) : "—"}
-              </TableCell>
               <TableCell sx={{ ...tableBodyCellSx, ...hiddenOnSm, whiteSpace: "nowrap" }}>
                 {formatDateTime(row.lastUpdated)}
               </TableCell>

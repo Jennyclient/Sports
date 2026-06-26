@@ -21,12 +21,10 @@ import type { MarketFormValues } from "@/types/market";
 
 const MarketSchema = z.object({
   id: z.string().min(1, "Market ID is required"),
-  eventId: z.string().min(1, "Event ID is required"),
   eventName: z.string().min(1, "Event name is required"),
   sport: z.enum(["Cricket", "Football", "Tennis", "Basketball", "Hockey", "Kabaddi"]),
   marketType: z.enum(["Match Odds", "Book Maker", "Fancy", "Line", "Over/Under", "Toss"]),
   status: z.enum(["Open", "Suspended", "Settled", "Closed"]),
-  volume: z.number().min(0, "Volume cannot be negative"),
 });
 
 type Props = {
@@ -37,12 +35,10 @@ type Props = {
 
 const defaultValues: MarketFormValues = {
   id: "",
-  eventId: "",
   eventName: "",
   sport: "Cricket",
   marketType: "Match Odds",
   status: "Open",
-  volume: 0,
 };
 
 export default function MarketFormDialog({ open, onClose, onSubmit }: Props) {
@@ -104,14 +100,6 @@ export default function MarketFormDialog({ open, onClose, onSubmit }: Props) {
           />
 
           <TextField
-            label="Event ID"
-            fullWidth
-            {...register("eventId")}
-            error={Boolean(errors.eventId)}
-            helperText={errors.eventId?.message ?? " "}
-          />
-
-          <TextField
             label="Event Name"
             fullWidth
             {...register("eventName")}
@@ -159,15 +147,6 @@ export default function MarketFormDialog({ open, onClose, onSubmit }: Props) {
                 ))}
               </TextField>
             )}
-          />
-
-          <TextField
-            label="Volume"
-            type="number"
-            fullWidth
-            {...register("volume", { valueAsNumber: true })}
-            error={Boolean(errors.volume)}
-            helperText={errors.volume?.message ?? " "}
           />
         </Stack>
       </DialogContent>

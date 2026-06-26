@@ -41,12 +41,10 @@ export default function MarketsPage() {
     setMarkets((prev) => [
       {
         id: values.id,
-        eventId: values.eventId,
         eventName: values.eventName,
         sport: values.sport,
         marketType: values.marketType,
         status: values.status,
-        volume: values.volume,
         lastUpdated: new Date().toISOString(),
       },
       ...prev,
