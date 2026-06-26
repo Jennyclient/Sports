@@ -12,33 +12,25 @@ import Stack from "@mui/material/Stack";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 import { useLiveEvents } from "@/components/events/eventsStore";
-import { LIVE_MARKETS_SEED } from "./marketsSeed";
+import { useEventMarkets } from "@/components/events/marketsStore";
 import { MARKET_TABS, marketCategory } from "./marketCategory";
-import AddMarketDialog, { type AddMarketFormValues } from "./AddMarketDialog";
 import { formatDateTime, sportEmoji } from "@/utils/format";
 import { eventStatusColor, marketStatusColor } from "@/components/events/common/status";
-import type { AddableMarketType, EventMarket } from "@/types/market";
+import type { AddableMarketType } from "@/types/market";
 
 type Props = {
   eventId: string;
 };
 
-const createMarketId = () =>
-  `mk-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-
 export default function EventMarketsPage({ eventId }: Props) {
   const liveEvents = useLiveEvents();
   const event = liveEvents.find((e) => e.id === eventId) ?? null;
 
-  const [markets, setMarkets] = useState<EventMarket[]>(
-    () => LIVE_MARKETS_SEED[eventId] ?? [],
-  );
+  const markets = useEventMarkets(eventId);
   const [tab, setTab] = useState<AddableMarketType>("Book Maker");
-  const [addMarketOpen, setAddMarketOpen] = useState(false);
 
   const countByTab = useMemo(
     () =>
@@ -55,19 +47,6 @@ export default function EventMarketsPage({ eventId }: Props) {
   const filteredMarkets = markets.filter(
     (market) => marketCategory(market.marketType) === tab,
   );
-
-  const handleAddMarket = (values: AddMarketFormValues) => {
-    setMarkets((prev) => [
-      {
-        id: createMarketId(),
-        eventId,
-        name: values.name,
-        marketType: values.marketType,
-        status: values.status,
-      },
-      ...prev,
-    ]);
-  };
 
   const backButton = (
     <Button
@@ -138,17 +117,8 @@ export default function EventMarketsPage({ eventId }: Props) {
           sx={{ alignItems: "center", justifyContent: "space-between", px: 2.5, py: 2 }}
         >
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-            Markets ({markets.length})
+            Assigned Markets ({markets.length})
           </Typography>
-          <Button
-            variant="contained"
-            size="small"
-            startIcon={<AddOutlinedIcon />}
-            onClick={() => setAddMarketOpen(true)}
-            sx={{ textTransform: "none", fontWeight: 600 }}
-          >
-            Add Market
-          </Button>
         </Stack>
 
         <Box sx={{ px: 2.5 }}>
@@ -172,7 +142,7 @@ export default function EventMarketsPage({ eventId }: Props) {
               sx={{ p: 3, borderRadius: 3, borderColor: "divider", textAlign: "center" }}
             >
               <Typography variant="body2" color="text.secondary">
-                No {tab} markets yet. Click &quot;Add Market&quot; to create one.
+                No {tab} markets assigned to this event yet.
               </Typography>
             </Paper>
           ) : (
@@ -209,14 +179,6 @@ export default function EventMarketsPage({ eventId }: Props) {
           )}
         </Box>
       </Paper>
-
-      <AddMarketDialog
-        open={addMarketOpen}
-        eventName={event.name}
-        defaultType={tab}
-        onClose={() => setAddMarketOpen(false)}
-        onSubmit={handleAddMarket}
-      />
     </Stack>
   );
 }

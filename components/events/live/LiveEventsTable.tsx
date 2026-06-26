@@ -13,9 +13,10 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutlineOutlined";
-import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import AddBusinessOutlinedIcon from "@mui/icons-material/AddBusinessOutlined";
 
 import {
   hiddenOnXs,
@@ -30,7 +31,8 @@ import type { SortDirection } from "@/components/events/common/constants";
 import type { SportEvent } from "@/types/event";
 
 export type LiveEventActions = {
-  onViewMarkets: (row: SportEvent) => void;
+  onViewAssigned: (row: SportEvent) => void;
+  onAddMarkets: (row: SportEvent) => void;
   onToggleDisable: (row: SportEvent) => void;
 };
 
@@ -89,19 +91,23 @@ export default function LiveEventsTable({
           {rows.map((row) => {
             const disabled = row.status === "Suspended";
             return (
-              <TableRow
-                key={row.id}
-                hover
-                onClick={() => actions.onViewMarkets(row)}
-                sx={{ cursor: "pointer" }}
-              >
+              <TableRow key={row.id} hover>
                 <TableCell sx={{ ...tableBodyCellSx, fontFamily: "monospace", fontSize: 13 }}>
                   {row.id}
                 </TableCell>
                 <TableCell sx={{ ...tableBodyCellSx, fontWeight: 500 }}>
                   <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                     <span>{sportEmoji(row.sport)}</span>
-                    <span>{row.name}</span>
+                    <Link
+                      component="button"
+                      type="button"
+                      underline="hover"
+                      color="primary"
+                      onClick={() => actions.onViewAssigned(row)}
+                      sx={{ fontWeight: 600, textAlign: "left", cursor: "pointer" }}
+                    >
+                      {row.name}
+                    </Link>
                   </Stack>
                 </TableCell>
                 <TableCell sx={{ ...tableBodyCellSx, ...hiddenOnXs }}>{row.sport}</TableCell>
@@ -126,13 +132,14 @@ export default function LiveEventsTable({
                     sx={{ flexWrap: "nowrap", justifyContent: "flex-end" }}
                     onClick={(event) => event.stopPropagation()}
                   >
-                    <Tooltip title="View Markets" arrow>
+                    <Tooltip title="Add Markets" arrow>
                       <IconButton
                         size="small"
-                        aria-label="View markets"
-                        onClick={() => actions.onViewMarkets(row)}
+                        aria-label="Add markets"
+                        color="primary"
+                        onClick={() => actions.onAddMarkets(row)}
                       >
-                        <StorefrontOutlinedIcon fontSize="small" />
+                        <AddBusinessOutlinedIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title={disabled ? "Enable Event" : "Disable Event"} arrow>

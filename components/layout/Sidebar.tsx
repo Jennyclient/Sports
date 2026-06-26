@@ -105,15 +105,16 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
     const state: Record<string, boolean> = {};
     for (const item of NAV_ITEMS) {
       if (isGroup(item)) {
-        state[item.label] = item.children.some((c) => isActive(pathname, c.href));
+        state[item.label] = item.children.some((c) =>
+          isActive(pathname, c.href),
+        );
       }
     }
     return state;
   }, [pathname]);
 
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(
-    initiallyOpen,
-  );
+  const [openGroups, setOpenGroups] =
+    useState<Record<string, boolean>>(initiallyOpen);
 
   const toggleGroup = (label: string) =>
     setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }));
@@ -139,7 +140,10 @@ function SidebarContent({ onNavigate }: SidebarContentProps) {
           <SportsEsportsOutlinedIcon fontSize="small" />
         </Box>
         <Stack spacing={0}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 700, lineHeight: 1.2 }}
+          >
             Sports Admin
           </Typography>
           <Typography variant="caption" color="text.secondary">
